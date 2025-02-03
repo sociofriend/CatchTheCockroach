@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "PSD & Svg Cute Ai Graphic Vector Art Cartoon Roach PNG Image Free Trasparent background - 480x480.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
