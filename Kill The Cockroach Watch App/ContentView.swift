@@ -1,21 +1,10 @@
-//
-//  ContentView.swift
-//  Kill The Cockroach Watch App
-//
-//  Created by Lilit Avdalyan on 03.02.25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     @State private var cockroachPosition = CGPoint(x: 100, y: 100)
-    @State private var cockroachPosition1 = CGPoint(x: 100, y: 100)
-    @State private var cockroachPosition2 = CGPoint(x: 100, y: 100)
     @State private var score = 0
     @State private var isAlive = true
-    @State private var isAlive1 = true
-    @State private var isAlive2 = true
-    
+    @State private var showCelebration = false  // Celebration flag
     
     let screenWidth = WKInterfaceDevice.current().screenBounds.width
     let screenHeight = WKInterfaceDevice.current().screenBounds.height
@@ -27,9 +16,7 @@ struct ContentView: View {
                 .scaledToFill()
                 .zIndex(0)
             
-            // Խավարասեր (սեղմելու համար)
             if isAlive {
-                
                 Image("cockroach-\(Int.random(in: 0...6))")
                     .resizable()
                     .scaledToFit()
@@ -38,37 +25,43 @@ struct ContentView: View {
                     .onTapGesture {
                         isAlive = false
                         score += 1
+                        checkForCelebration()  // Check score condition
                         respawnCockroach()
                     }
                     .animation(.easeInOut(duration: 0.3), value: cockroachPosition)
             }
             
-            // Մատչելի միավորների ցուցադրություն
             VStack {
                 HStack {
                     Spacer()
                     Text("Score: \(score)")
                         .foregroundColor(.white)
                         .font(.headline)
-                        .background {
+                        .background(
                             RoundedRectangle(cornerRadius: 50)
                                 .frame(width: 100, height: 30)
                                 .padding(5)
                                 .opacity(0.8)
                                 .foregroundStyle(.red)
-                        }
+                        )
                     Spacer()
                 }
                 Spacer()
             }
             .padding()
+            
+            // 🎉 Celebration Effect
+            if showCelebration {
+                ConfettiView()
+                    .transition(.opacity)
+                    .zIndex(1)
+            }
         }
         .onAppear {
             startMovingCockroach()
         }
     }
     
-    // Խավարասերի շարժման գործառույթ
     func startMovingCockroach() {
         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
             if isAlive {
@@ -77,25 +70,66 @@ struct ContentView: View {
         }
     }
     
-    // Խավարասերի վերադասավորում պատահական դիրքում
     func moveCockroachRandomly() {
         let randomX = CGFloat.random(in: 20...(screenWidth - 20))
         let randomY = CGFloat.random(in: 20...(screenHeight - 20))
         cockroachPosition = CGPoint(x: randomX, y: randomY)
     }
     
-    // Սատկացնելուց հետո նոր խավարասեր ավելացնելու գործառույթ
     func respawnCockroach() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             isAlive = true
             moveCockroachRandomly()
         }
     }
+    
+    // 🎯 Check for Celebration Trigger
+    func checkForCelebration() {
+        if score != 0 && score % 10 == 0 {
+            showCelebration = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                withAnimation {
+                    showCelebration = false
+                }
+            }
+        }
+    }
 }
 
-#Preview {
-    ContentView()
+// 🎊 Simple Confetti Animation View
+struct ConfettiView: View {
+    @State private var rotation = 0.0
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<20) { i in
+                Circle()
+                    .fill(randomColor())
+                    .frame(width: 8, height: 8)
+                    .position(
+                        x: CGFloat.random(in: 0...180),
+                        y: CGFloat.random(in: 0...180)
+                    )
+                    .opacity(0.8)
+                    .rotationEffect(.degrees(rotation))
+                    .animation(
+                        .easeInOut(duration: Double.random(in: 0.5...1.5))
+                        .repeatForever(autoreverses: true),
+                        value: rotation
+                    )
+            }
+        }
+        .onAppear {
+            rotation = 360
+        }
+    }
+    
+    func randomColor() -> Color {
+        let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .orange, .pink]
+        return colors.randomElement() ?? .white
+    }
 }
+
 #Preview {
     ContentView()
 }
