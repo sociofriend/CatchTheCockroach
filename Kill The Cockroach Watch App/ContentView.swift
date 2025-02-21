@@ -1,26 +1,30 @@
 import SwiftUI
+import WatchKit
 
 struct ContentView: View {
     @State private var cockroachPosition = CGPoint(x: 100, y: 100)
     @State private var score = 0
     @State private var isAlive = true
     @State private var showCelebration = false  // Celebration flag
+    @State private var backgroundNumber = 0
+    @State private var celebrationType = 0
     
     let screenWidth = WKInterfaceDevice.current().screenBounds.width
     let screenHeight = WKInterfaceDevice.current().screenBounds.height
+
     
     var body: some View {
         ZStack {
-            Image(.background)
+            Image("background-\(backgroundNumber)")
                 .resizable()
                 .scaledToFill()
                 .zIndex(0)
             
             if isAlive {
-                Image("cockroach-\(Int.random(in: 0...6))")
+                Image("cockroach-\(Int.random(in: 0...14))")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: Double.random(in: 30...50), height: Double.random(in: 50...80))
+                    .frame(width: Double.random(in: 50...70), height: Double.random(in: 70...90))
                     .position(cockroachPosition)
                     .onTapGesture {
                         isAlive = false
@@ -29,6 +33,7 @@ struct ContentView: View {
                         respawnCockroach()
                     }
                     .animation(.easeInOut(duration: 0.3), value: cockroachPosition)
+                    .shadow(color: .white, radius: 8)
             }
             
             VStack {
@@ -52,9 +57,20 @@ struct ContentView: View {
             
             // 🎉 Celebration Effect
             if showCelebration {
-                ConfettiView()
-                    .transition(.opacity)
-                    .zIndex(1)
+                VStack {
+                    
+                    if celebrationType == 0 {
+                        ConfettiView()
+                    } else if celebrationType == 1 {
+                        FireworksView()
+                    } else {
+                        SparkleView()
+                    }
+                    
+                }
+                .transition(.opacity)
+                .zIndex(1)
+      
             }
         }
         .onAppear {
@@ -87,6 +103,9 @@ struct ContentView: View {
     func checkForCelebration() {
         if score != 0 && score % 10 == 0 {
             showCelebration = true
+            celebrationType = Int.random(in: 0...2) // Choose a random effect
+            changeBackground()
+            playHaptic()
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 withAnimation {
                     showCelebration = false
@@ -94,6 +113,15 @@ struct ContentView: View {
             }
         }
     }
+    
+    func changeBackground() {
+        backgroundNumber = Int.random(in: 0...6)
+    }
+    
+    func playHaptic() {
+        WKInterfaceDevice.current().play(.success) // Plays a small vibration
+    }
+    
 }
 
 // 🎊 Simple Confetti Animation View
@@ -128,6 +156,8 @@ struct ConfettiView: View {
         let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .orange, .pink]
         return colors.randomElement() ?? .white
     }
+    
+
 }
 
 #Preview {

@@ -1,3 +1,12 @@
+//
+//  FireworksView.swift
+//  Kill The Cockroach
+//
+//  Created by Lilit Avdalyan on 22.02.25.
+//
+
+import SwiftUI
+
 struct FireworksView: View {
     @State private var opacity = 1.0
     

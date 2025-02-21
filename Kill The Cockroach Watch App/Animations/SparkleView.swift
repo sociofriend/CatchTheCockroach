@@ -1,3 +1,11 @@
+//
+//  SparkleView.swift
+//  Kill The Cockroach
+//
+//  Created by Lilit Avdalyan on 22.02.25.
+//
+import SwiftUI
+
 struct SparkleView: View {
     @State private var scale = 0.5
     
