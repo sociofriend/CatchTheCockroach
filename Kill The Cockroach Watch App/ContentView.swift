@@ -1,17 +1,22 @@
 import SwiftUI
 import WatchKit
 
+
 struct ContentView: View {
     @State private var cockroachPosition = CGPoint(x: 100, y: 100)
     @State private var score = 0
     @State private var isAlive = true
-    @State private var showCelebration = false  // Celebration flag
+    @State private var showCelebration = false
     @State private var backgroundNumber = 0
     @State private var celebrationType = 0
+    @State private var targetScore = 5
+    @State private var gameStarted = false
+    @State private var showTimer = true
+    
+    @StateObject private var gameTimer = GameTimer(initialTime: 10)
     
     let screenWidth = WKInterfaceDevice.current().screenBounds.width
     let screenHeight = WKInterfaceDevice.current().screenBounds.height
-
     
     var body: some View {
         ZStack {
@@ -29,7 +34,6 @@ struct ContentView: View {
                     .onTapGesture {
                         isAlive = false
                         score += 1
-                        checkForCelebration()  // Check score condition
                         respawnCockroach()
                     }
                     .animation(.easeInOut(duration: 0.3), value: cockroachPosition)
@@ -38,27 +42,36 @@ struct ContentView: View {
             
             VStack {
                 HStack {
-                    Spacer()
-                    Text("Score: \(score)")
+                    Text("🎯: \(score)/\(targetScore)")
                         .foregroundColor(.white)
                         .font(.headline)
                         .background(
                             RoundedRectangle(cornerRadius: 50)
-                                .frame(width: 100, height: 30)
+                                .frame(width: 60, height: 25)
                                 .padding(5)
-                                .opacity(0.8)
+                                .opacity(0.7)
                                 .foregroundStyle(.red)
                         )
                     Spacer()
+                    if showTimer {
+                        Text("⏳: \(gameTimer.timeRemaining)")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .background(
+                                RoundedRectangle(cornerRadius: 50)
+                                    .frame(width: 60, height: 25)
+                                    .padding(5)
+                                    .opacity(0.7)
+                                    .foregroundStyle(.blue)
+                            )
+                    }
                 }
+                .padding()
                 Spacer()
             }
-            .padding()
             
-            // 🎉 Celebration Effect
             if showCelebration {
                 VStack {
-                    
                     if celebrationType == 0 {
                         ConfettiView()
                     } else if celebrationType == 1 {
@@ -66,16 +79,40 @@ struct ContentView: View {
                     } else {
                         SparkleView()
                     }
-                    
                 }
                 .transition(.opacity)
                 .zIndex(1)
-      
             }
         }
-        .onAppear {
-            startMovingCockroach()
+        .onAppear { startGame() }
+        .onChange(of: gameTimer.timeRemaining) { _, newState in
+            if newState == 0 { endGame() }
         }
+        .onChange(of: score) { _, newValue in
+            if newValue == targetScore { endGame() }
+        }
+    }
+    
+    func startGame() {
+        score = 0
+        targetScore = Int.random(in: 5...7)
+        gameTimer.invalidate()
+        gameTimer.timeRemaining = 10
+        gameTimer.start()
+        gameStarted = true
+        selectBackground()
+        startMovingCockroach()
+    }
+    
+    func endGame() {
+        checkForCelebration()
+        playHaptic()
+        resetGoal()
+    }
+    
+    func resetGoal() {
+        showCelebration = false
+        startGame()
     }
     
     func startMovingCockroach() {
@@ -87,79 +124,33 @@ struct ContentView: View {
     }
     
     func moveCockroachRandomly() {
-        let randomX = CGFloat.random(in: 20...(screenWidth - 20))
-        let randomY = CGFloat.random(in: 20...(screenHeight - 20))
+        let randomX = CGFloat.random(in: 8...(screenWidth - 8))
+        let randomY = CGFloat.random(in: 8...(screenHeight - 8))
         cockroachPosition = CGPoint(x: randomX, y: randomY)
     }
     
     func respawnCockroach() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            isAlive = true
-            moveCockroachRandomly()
-        }
+        isAlive = true
+        moveCockroachRandomly()
     }
     
-    // 🎯 Check for Celebration Trigger
     func checkForCelebration() {
-        if score != 0 && score % 10 == 0 {
+        if score != 0 && score == targetScore {
+            celebrationType = Int.random(in: 0...2)
             showCelebration = true
-            celebrationType = Int.random(in: 0...2) // Choose a random effect
-            changeBackground()
-            playHaptic()
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                withAnimation {
-                    showCelebration = false
-                }
+                withAnimation { showCelebration = false }
             }
         }
     }
     
-    func changeBackground() {
+    func selectBackground() {
         backgroundNumber = Int.random(in: 0...6)
     }
     
     func playHaptic() {
-        WKInterfaceDevice.current().play(.success) // Plays a small vibration
+        WKInterfaceDevice.current().play(score >= targetScore ? .success : .retry)
     }
-    
 }
 
-// 🎊 Simple Confetti Animation View
-struct ConfettiView: View {
-    @State private var rotation = 0.0
-    
-    var body: some View {
-        ZStack {
-            ForEach(0..<20) { i in
-                Circle()
-                    .fill(randomColor())
-                    .frame(width: 8, height: 8)
-                    .position(
-                        x: CGFloat.random(in: 0...180),
-                        y: CGFloat.random(in: 0...180)
-                    )
-                    .opacity(0.8)
-                    .rotationEffect(.degrees(rotation))
-                    .animation(
-                        .easeInOut(duration: Double.random(in: 0.5...1.5))
-                        .repeatForever(autoreverses: true),
-                        value: rotation
-                    )
-            }
-        }
-        .onAppear {
-            rotation = 360
-        }
-    }
-    
-    func randomColor() -> Color {
-        let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .orange, .pink]
-        return colors.randomElement() ?? .white
-    }
-    
-
-}
-
-#Preview {
-    ContentView()
-}
+#Preview { ContentView() }
