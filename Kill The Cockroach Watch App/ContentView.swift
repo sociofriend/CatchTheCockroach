@@ -1,8 +1,10 @@
 import SwiftUI
 import WatchKit
-
+import Combine
 
 struct ContentView: View {
+    @State private var cancellables: Set<AnyCancellable> = []
+    
     @State private var cockroachPosition = CGPoint(x: 100, y: 100)
     @State private var score = 0
     @State private var isAlive = true
@@ -29,11 +31,13 @@ struct ContentView: View {
                 Image("cockroach-\(Int.random(in: 0...14))")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: Double.random(in: 50...70), height: Double.random(in: 70...90))
+                    .frame(width: 60, height: 80)
                     .position(cockroachPosition)
                     .onTapGesture {
                         isAlive = false
-                        score += 1
+                        if score < targetScore {
+                            score += 1
+                        }
                         respawnCockroach()
                     }
                     .animation(.easeInOut(duration: 0.3), value: cockroachPosition)
@@ -82,18 +86,23 @@ struct ContentView: View {
                 }
                 .transition(.opacity)
                 .zIndex(1)
+                
             }
         }
-        .onAppear { startGame() }
+        .onAppear {
+            startGame()
+            startMovingCockroach()
+        }
         .onChange(of: gameTimer.timeRemaining) { _, newState in
-            if newState == 0 { endGame() }
+            if newState == 0 { checkForCelebration() }
         }
         .onChange(of: score) { _, newValue in
-            if newValue == targetScore { endGame() }
+            if newValue == targetScore { checkForCelebration() }
         }
     }
     
     func startGame() {
+        isAlive = true
         score = 0
         targetScore = Int.random(in: 5...7)
         gameTimer.invalidate()
@@ -101,26 +110,18 @@ struct ContentView: View {
         gameTimer.start()
         gameStarted = true
         selectBackground()
-        startMovingCockroach()
     }
     
-    func endGame() {
-        checkForCelebration()
-        playHaptic()
-        resetGoal()
-    }
-    
-    func resetGoal() {
-        showCelebration = false
-        startGame()
-    }
     
     func startMovingCockroach() {
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
-            if isAlive {
-                moveCockroachRandomly()
+        Timer.publish(every: 1.5, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                if isAlive {
+                    moveCockroachRandomly()
+                }
             }
-        }
+            .store(in: &cancellables)
     }
     
     func moveCockroachRandomly() {
@@ -135,13 +136,28 @@ struct ContentView: View {
     }
     
     func checkForCelebration() {
+
         if score != 0 && score == targetScore {
+            isAlive = false
             celebrationType = Int.random(in: 0...2)
             showCelebration = true
+            
+            cancellables.removeAll()
+            playHaptic()
+
+            print("🎉 Celebration ON at \(Date().description)")
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                withAnimation { showCelebration = false }
+                withAnimation {
+                    showCelebration = false
+                    print("🎉 Celebration OFF at \(Date().description)")
+                    
+                    startGame()
+                }
             }
+
         }
+        
     }
     
     func selectBackground() {

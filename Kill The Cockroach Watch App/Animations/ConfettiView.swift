@@ -41,3 +41,8 @@ struct ConfettiView: View {
         return colors.randomElement() ?? .white
     }
 }
+
+
+#Preview {
+    ConfettiView()
+}
