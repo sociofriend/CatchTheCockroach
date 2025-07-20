@@ -2,6 +2,16 @@ import SwiftUI
 import WatchKit
 import Combine
 
+enum CelebrationType: Int, CaseIterable {
+    case balloon = 1
+    case confetti = 2
+    case fireworks = 3
+    case heartBurst = 4
+    case rainbow = 5
+    case sparkle = 6
+    case starburst = 7
+}
+
 struct ContentView: View {
     @State private var cancellables: Set<AnyCancellable> = []
     
@@ -10,9 +20,8 @@ struct ContentView: View {
     @State private var isAlive = true
     @State private var showCelebration = false
     @State private var backgroundNumber = 0
-    @State private var celebrationType = 0
+    @State private var celebrationType: CelebrationType = .balloon
     @State private var targetScore = 5
-    @State private var gameStarted = false
     @State private var showTimer = true
     
     @StateObject private var gameTimer = GameTimer(initialTime: 10)
@@ -25,6 +34,7 @@ struct ContentView: View {
             Image("background-\(backgroundNumber)")
                 .resizable()
                 .scaledToFill()
+                .ignoresSafeArea()
                 .zIndex(0)
             
             if isAlive {
@@ -45,6 +55,7 @@ struct ContentView: View {
             }
             
             VStack {
+                Spacer()
                 HStack {
                     Text("🎯: \(score)/\(targetScore)")
                         .foregroundColor(.white)
@@ -56,6 +67,8 @@ struct ContentView: View {
                                 .opacity(0.7)
                                 .foregroundStyle(.red)
                         )
+                       
+                    
                     Spacer()
                     if showTimer {
                         Text("⏳: \(gameTimer.timeRemaining)")
@@ -71,17 +84,25 @@ struct ContentView: View {
                     }
                 }
                 .padding()
-                Spacer()
             }
             
             if showCelebration {
                 VStack {
-                    if celebrationType == 0 {
+                    switch celebrationType {
+                    case .balloon:
+                        BalloonView()
+                    case .confetti:
                         ConfettiView()
-                    } else if celebrationType == 1 {
+                    case .fireworks:
                         FireworksView()
-                    } else {
+                    case .heartBurst:
+                        HeartBurstView()
+                    case .rainbow:
+                        RainbowWaveView()
+                    case .sparkle:
                         SparkleView()
+                    case .starburst:
+                        StarburstView()
                     }
                 }
                 .transition(.opacity)
@@ -91,7 +112,7 @@ struct ContentView: View {
         }
         .onAppear {
             startGame()
-            startMovingCockroach()
+            //            startMovingCockroach()
         }
         .onChange(of: gameTimer.timeRemaining) { _, newState in
             if newState == 0 { checkForCelebration() }
@@ -102,16 +123,16 @@ struct ContentView: View {
     }
     
     func startGame() {
-        isAlive = true
         score = 0
         targetScore = Int.random(in: 5...7)
-        gameTimer.invalidate()
-        gameTimer.timeRemaining = 10
-        gameTimer.start()
-        gameStarted = true
         selectBackground()
+        isAlive = true
+        resetTimer()
+        startMovingCockroach()
     }
-    
+}
+
+extension ContentView {
     
     func startMovingCockroach() {
         Timer.publish(every: 1.5, on: .main, in: .common)
@@ -138,34 +159,42 @@ struct ContentView: View {
     func checkForCelebration() {
 
         if score != 0 && score == targetScore {
-            isAlive = false
-            celebrationType = Int.random(in: 0...2)
+            celebrationType = CelebrationType(rawValue: Int.random(in: 1...CelebrationType.allCases.count)) ?? .balloon
             showCelebration = true
             
             cancellables.removeAll()
             playHaptic()
 
             print("🎉 Celebration ON at \(Date().description)")
+            isAlive = false
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 withAnimation {
                     showCelebration = false
                     print("🎉 Celebration OFF at \(Date().description)")
-                    
                     startGame()
                 }
             }
 
+        } else {
+            startGame()
         }
         
     }
     
     func selectBackground() {
-        backgroundNumber = Int.random(in: 0...6)
+        backgroundNumber = Int.random(in: 0...7)
     }
     
     func playHaptic() {
         WKInterfaceDevice.current().play(score >= targetScore ? .success : .retry)
+    }
+    
+    fileprivate func resetTimer() {
+        gameTimer.invalidate()
+        gameTimer.timeRemaining = 10
+        
+        gameTimer.start()
     }
 }
 

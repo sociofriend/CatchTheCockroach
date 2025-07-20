@@ -1,8 +1,11 @@
-This app is my first trial ot crate a simple app to run on Apple Watch OS.
-It has target and timer and plays haptics when the target is reached within the given time or failed.
-In case of win celebration animations are also previewed.
-After each win or loss game restartes.
+This watchOS app is a lightweight, distraction-free game designed to offer quick and engaging interactions on Apple Watch.
 
-Game has no encription, no registration, does not use local network, internet, or bluetoot, does not use location, and does not make any api calls.
+The core gameplay features a countdown timer and a target that must be reached within the allotted time. Haptic feedback provides immediate response upon success or failure, and celebratory animations enhance the user experience in the event of a win. The game automatically resets after each round, ensuring a continuous and seamless experience.
 
-Perfect to install on a kid's watch.
+This app prioritizes user privacy and safety:
+	•	No user accounts or registration required
+	•	No internet, Bluetooth, or local network access
+	•	No location tracking or API integrations
+	•	No data collection or encryption mechanisms involved
+
+Optimized for performance and simplicity, this app is particularly well-suited for children’s Apple Watches.
