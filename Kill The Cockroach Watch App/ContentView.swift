@@ -25,6 +25,7 @@ struct ContentView: View {
             Image("background-\(backgroundNumber)")
                 .resizable()
                 .scaledToFill()
+                .ignoresSafeArea()
                 .zIndex(0)
             
             if isAlive {
@@ -45,6 +46,7 @@ struct ContentView: View {
             }
             
             VStack {
+                Spacer()
                 HStack {
                     Text("🎯: \(score)/\(targetScore)")
                         .foregroundColor(.white)
@@ -71,7 +73,7 @@ struct ContentView: View {
                     }
                 }
                 .padding()
-                Spacer()
+
             }
             
             if showCelebration {
