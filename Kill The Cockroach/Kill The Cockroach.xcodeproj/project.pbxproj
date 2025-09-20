@@ -6,7 +6,36 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		98FF6BA42D513D2400F0FA6F /* Kill The Cockroach Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 98FF6BA32D513D2400F0FA6F /* Kill The Cockroach Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		98FF6BA52D513D2400F0FA6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98FF6B972D513D2300F0FA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 98FF6BA22D513D2400F0FA6F;
+			remoteInfo = "Kill The Cockroach Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		98FF6BB62D513D2500F0FA6F /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				98FF6BA42D513D2400F0FA6F /* Kill The Cockroach Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		98FF6B9D2D513D2400F0FA6F /* Kill The Cockroach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kill The Cockroach.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98FF6BA32D513D2400F0FA6F /* Kill The Cockroach Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kill The Cockroach Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -40,6 +69,7 @@
 		98FF6B9E2D513D2400F0FA6F /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				98FF6B9D2D513D2400F0FA6F /* Kill The Cockroach.app */,
 				98FF6BA32D513D2400F0FA6F /* Kill The Cockroach Watch App.app */,
 			);
 			name = Products;
@@ -48,6 +78,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		98FF6B9C2D513D2400F0FA6F /* Kill The Cockroach */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98FF6BB72D513D2500F0FA6F /* Build configuration list for PBXNativeTarget "Kill The Cockroach" */;
+			buildPhases = (
+				98FF6B9B2D513D2400F0FA6F /* Resources */,
+				98FF6BB62D513D2500F0FA6F /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				98FF6BA62D513D2400F0FA6F /* PBXTargetDependency */,
+			);
+			name = "Kill The Cockroach";
+			packageProductDependencies = (
+			);
+			productName = "Kill The Cockroach";
+			productReference = 98FF6B9D2D513D2400F0FA6F /* Kill The Cockroach.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
 		98FF6BA22D513D2400F0FA6F /* Kill The Cockroach Watch App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98FF6BB32D513D2500F0FA6F /* Build configuration list for PBXNativeTarget "Kill The Cockroach Watch App" */;
@@ -80,6 +129,9 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					98FF6B9C2D513D2400F0FA6F = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					98FF6BA22D513D2400F0FA6F = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -99,12 +151,20 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				98FF6B9C2D513D2400F0FA6F /* Kill The Cockroach */,
 				98FF6BA22D513D2400F0FA6F /* Kill The Cockroach Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		98FF6B9B2D513D2400F0FA6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98FF6BA12D513D2400F0FA6F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -123,6 +183,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		98FF6BA62D513D2400F0FA6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 98FF6BA22D513D2400F0FA6F /* Kill The Cockroach Watch App */;
+			targetProxy = 98FF6BA52D513D2400F0FA6F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		98FF6BB12D513D2500F0FA6F /* Debug */ = {
@@ -258,7 +326,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Kill The Cockroach Watch App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Kill-The-Cockroach-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Kill The Cockroach";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
@@ -267,7 +334,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sociofriend.Kill-The-Cockroach.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "sociofriend.Catch-The-Cockroach.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -289,7 +356,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Kill The Cockroach Watch App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Kill-The-Cockroach-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Kill The Cockroach";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
@@ -298,13 +364,46 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sociofriend.Kill-The-Cockroach.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "sociofriend.Catch-The-Cockroach.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
+		98FF6BB82D513D2500F0FA6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kill The Cockroach";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sociofriend.Kill-The-Cockroach";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		98FF6BB92D513D2500F0FA6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kill The Cockroach";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sociofriend.Kill-The-Cockroach";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
@@ -327,6 +426,15 @@
 			buildConfigurations = (
 				98FF6BB42D513D2500F0FA6F /* Debug */,
 				98FF6BB52D513D2500F0FA6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98FF6BB72D513D2500F0FA6F /* Build configuration list for PBXNativeTarget "Kill The Cockroach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98FF6BB82D513D2500F0FA6F /* Debug */,
+				98FF6BB92D513D2500F0FA6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
