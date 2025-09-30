@@ -1,5 +1,11 @@
+//
+//  ContentView.swift
+//  Catch The Cockroach Watch App
+//
+//  Created by Lilit Avdalyan on 22.09.25.
+//
+
 import SwiftUI
-import WatchKit
 import Combine
 
 struct ContentView: View {
@@ -73,7 +79,7 @@ struct ContentView: View {
                     }
                 }
                 .padding()
-
+                
             }
             
             if showCelebration {
@@ -138,7 +144,7 @@ struct ContentView: View {
     }
     
     func checkForCelebration() {
-
+        
         if score != 0 && score == targetScore {
             isAlive = false
             celebrationType = Int.random(in: 0...2)
@@ -146,7 +152,7 @@ struct ContentView: View {
             
             cancellables.removeAll()
             playHaptic()
-
+            
             print("🎉 Celebration ON at \(Date().description)")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
@@ -157,7 +163,7 @@ struct ContentView: View {
                     startGame()
                 }
             }
-
+            
         }
         
     }
@@ -171,4 +177,7 @@ struct ContentView: View {
     }
 }
 
-#Preview { ContentView() }
+
+#Preview {
+    ContentView()
+}
