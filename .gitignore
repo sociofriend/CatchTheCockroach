@@ -1,0 +1,94 @@
+############################
+# macOS
+############################
+.DS_Store
+**/.DS_Store
+
+############################
+# Xcode - User Data
+############################
+xcuserdata/
+*.xcuserstate
+
+############################
+# Xcode - Build & Derived Data
+############################
+build/
+DerivedData/
+.build/
+
+############################
+# Xcode - Project Metadata (legacy / noise)
+############################
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.moved-aside
+*.xcscmblueprint
+*.xccheckout
+
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+############################
+# Xcode - Workspace State
+############################
+*.xcworkspace/xcuserdata/
+
+############################
+# Swift / Obj-C
+############################
+*.hmap
+
+############################
+# App Packaging
+############################
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+############################
+# Swift Package Manager
+############################
+Packages/
+Package.pins
+Package.resolved
+.swiftpm
+
+############################
+# CocoaPods
+############################
+Pods/
+
+############################
+# Carthage
+############################
+Carthage/Build/
+
+############################
+# Accio
+############################
+Dependencies/
+.accio/
+
+############################
+# Fastlane
+############################
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+############################
+# Playgrounds
+############################
+timeline.xctimeline
+playground.xcworkspace
+
+############################
+# Code Injection
+############################
+iOSInjectionProject/
