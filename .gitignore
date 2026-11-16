@@ -92,3 +92,5 @@ playground.xcworkspace
 # Code Injection
 ############################
 iOSInjectionProject/
+# graphify knowledge graph (rebuilt locally)
+graphify-out/

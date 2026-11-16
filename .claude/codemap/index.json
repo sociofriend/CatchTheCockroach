@@ -1,0 +1,17 @@
+{"version": 1, "files": {
+".mcp.json": {"sha256": "01d15480fc9cf196", "purpose": "Project MCP servers for Claude Code: graphify (code graph from graphify-out/graph.json)."},
+"CLAUDE.md": {"sha256": "57b792fe15fc239d", "purpose": "Kill The Cockroach (watchOS)"},
+"Kill The Cockroach Watch App/Animations/BalloonView.swift": {"sha256": "869024ffd020ea05", "purpose": "Win celebration: rising balloons.", "types": ["BalloonView"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/ConfettiView.swift": {"sha256": "0e094a6216c9b0da", "purpose": "Win celebration: falling confetti.", "types": ["ConfettiView"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/FireworksView.swift": {"sha256": "b4a86fc42294727c", "purpose": "Win celebration: fireworks bursts.", "types": ["FireworksView"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/HeartBurstView.swift": {"sha256": "980daf538b3478bb", "purpose": "Win celebration: burst of hearts.", "types": ["HeartBurstView"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/RainbowWaveView.swift": {"sha256": "3965898b0452c92c", "purpose": "Win celebration: rainbow wave.", "types": ["RainbowWaveView"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/SparkleView.swift": {"sha256": "cf117004ab553f9b", "purpose": "Win celebration: sparkles.", "types": ["SparkleView"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/StarShape.swift": {"sha256": "588b1e744594be04", "purpose": "Star Shape used by the celebrations.", "types": ["StarShape"], "imports": ["SwiftUI"]},
+"Kill The Cockroach Watch App/Animations/StarburstView.swift": {"sha256": "c59461d86fcb840b", "purpose": "Win celebration: starburst.", "types": ["StarburstView"], "imports": ["SwiftUI"], "uses": ["StarShape"]},
+"Kill The Cockroach Watch App/ContentView.swift": {"sha256": "0ecfb56009b12f90", "purpose": "Game screen: target, countdown, haptics, random win celebration.", "types": ["CelebrationType", "ContentView"], "imports": ["Combine", "SwiftUI", "WatchKit"], "uses": ["BalloonView", "ConfettiView", "FireworksView", "GameTimer", "HeartBurstView", "RainbowWaveView", "SparkleView", "StarburstView"]},
+"Kill The Cockroach Watch App/GameTimer.swift": {"sha256": "2c667d8736365deb", "purpose": "Countdown timer driving a round.", "types": ["GameTimer"], "imports": ["Playgrounds", "SwiftUI"]},
+"Kill The Cockroach Watch App/Kill_The_CockroachApp.swift": {"sha256": "86d00797904dbe51", "purpose": "watchOS app entry point.", "types": ["Kill_The_Cockroach_Watch_AppApp"], "imports": ["SwiftUI"], "uses": ["ContentView"]},
+"README.md": {"sha256": "57f5e2295430c8fe", "purpose": "What the watch game is and its privacy stance."},
+"Scripts/codemap.py": {"sha256": "3d24d5f35265b3fd", "purpose": "Keeps .claude/codemap/index.json in step with the repo's files.", "types": ["files", "digest", "header", "title", "first_doc", "tests_of", "scan", "main"], "imports": ["hashlib"]}
+}}
